@@ -36,7 +36,7 @@
 								<div class="blog-meta">
 									<span class="author"><a href="#"><i class="fa fa-user"></i>By
 											{{ blog.author }}</a><a href="#"><i class="fa fa-calendar"></i>{{ blog.create_at|date:"Y, M, D" }}</a><a
-											href="#"><i class="fa fa-comments"></i>Comment (15)</a></span>
+											href="#"><i class="fa fa-comments"></i>Comment ({{ comment_count }})</a></span>
 								</div>
 								<div class="content">
 									<p>
@@ -63,52 +63,36 @@
 						</div>
 						<div class="col-12">
 							<div class="comments">
-								<h3 class="comment-title">Comments (3)</h3>
+								<h3 class="comment-title">Comments ({{ comment_count }})</h3>
+								{% if comment_count == 0 %}
+								<h6 class="alert alert-danger">There is no comment</h6>
+								<br>
+								{% else %}
 								<!-- Single Comment -->
+								{% for blog_comment in blog.blog_comments.all %}
+								{% if blog_comment.parent == None %}
 								<div class="single-comment">
-									<img src="https://via.placeholder.com/80x80" alt="#">
+									<img src="https://via.placeholder.com/80x80" alt="{{ blog_comment.username }}">
 									<div class="content">
-										<h4>Alisa harm <span>At 8:59 pm On Feb 28, 2018</span></h4>
-										<p>Enthusiastically leverage existing premium quality vectors with
-											enterprise-wide innovation collaboration Phosfluorescently leverage
-											others enterprisee Phosfluorescently leverage.</p>
+										<h4>{{ blog_comment.username }}<span>{{ blog_comment.date|date:"Y, M, D" }}</span></h4>
+										<p>{{ blog_comment.message }}</p>
 										<div class="button">
 											<a href="#" class="btn"><i class="fa fa-reply"
 													aria-hidden="true"></i>Reply</a>
 										</div>
 									</div>
 								</div>
-								<!-- End Single Comment -->
-								<!-- Single Comment -->
+								{% else %}
 								<div class="single-comment left">
 									<img src="https://via.placeholder.com/80x80" alt="#">
 									<div class="content">
-										<h4>john deo <span>Feb 28, 2018 at 8:59 pm</span></h4>
-										<p>Enthusiastically leverage existing premium quality vectors with
-											enterprise-wide innovation collaboration Phosfluorescently leverage
-											others enterprisee Phosfluorescently leverage.</p>
-										<div class="button">
-											<a href="#" class="btn"><i class="fa fa-reply"
-													aria-hidden="true"></i>Reply</a>
-										</div>
+										<h4>{{ blog_comment.username }}<span>{{ blog_comment.date|date:"Y, M, D" }}</span></h4>
+										<p>{{ blog_comment.message }}</p>
 									</div>
 								</div>
-								<!-- End Single Comment -->
-								<!-- Single Comment -->
-								<div class="single-comment">
-									<img src="https://via.placeholder.com/80x80" alt="#">
-									<div class="content">
-										<h4>megan mart <span>Feb 28, 2018 at 8:59 pm</span></h4>
-										<p>Enthusiastically leverage existing premium quality vectors with
-											enterprise-wide innovation collaboration Phosfluorescently leverage
-											others enterprisee Phosfluorescently leverage.</p>
-										<div class="button">
-											<a href="#" class="btn"><i class="fa fa-reply"
-													aria-hidden="true"></i>Reply</a>
-										</div>
-									</div>
-								</div>
-								<!-- End Single Comment -->
+								{% endif %}
+								{% endfor %}
+								{% endif %}
 							</div>
 						</div>
 						<div class="col-12">
@@ -116,24 +100,26 @@
 								<div class="reply-head">
 									<h2 class="reply-title">Leave a Comment</h2>
 									<!-- Comment Form -->
-									<form class="form" action="#">
+
+									<form class="form">
+										{% csrf_token %}
 										<div class="row">
 											<div class="col-lg-6 col-md-6 col-12">
 												<div class="form-group">
 													<label>Your Name<span>*</span></label>
-													{{ BlogCommentForm }}
+													{{ form.username }}
 												</div>
 											</div>
 											<div class="col-lg-6 col-md-6 col-12">
 												<div class="form-group">
 													<label>Your Email<span>*</span></label>
-													{{ blog_comment_form.email }}
+													{{ form.email }}
 												</div>
 											</div>
 											<div class="col-12">
 												<div class="form-group">
 													<label>Your Message<span>*</span></label>
-													<textarea name="message" placeholder></textarea>
+													{{ form.message }}
 												</div>
 											</div>
 											<div class="col-12">
@@ -164,59 +150,30 @@
 					<div class="single-widget category">
 						<h3 class="title">Blog Categories</h3>
 						<ul class="categor-list">
-							<li><a href="#">Men's Apparel</a></li>
-							<li><a href="#">Women's Apparel</a></li>
-							<li><a href="#">Bags Collection</a></li>
-							<li><a href="#">Accessories</a></li>
-							<li><a href="#">Sun Glasses</a></li>
+							{% for category in category %}
+								<li><a href="#">{{ category.title }}</a></li>
+							{% endfor %}
 						</ul>
 					</div>
 					<!--/ End Single Widget -->
 					<!-- Single Widget -->
 					<div class="single-widget recent-post">
 						<h3 class="title">Recent post</h3>
-						<!-- Single Post -->
+						<!-- End Single Post -->
+						{% for recent_posts in recent_posts %}
 						<div class="single-post">
 							<div class="image">
-								<img src="https://via.placeholder.com/100x100" alt="#">
+								<img src="{{ recent_posts.image.url }}" alt="#">
 							</div>
 							<div class="content">
-								<h5><a href="#">Top 10 Beautyful Women Dress in the world</a></h5>
+								<h5><a href="{% url 'blog:blog_detail' recent_posts.id %}">{{ recent_posts.title }}</a></h5>
 								<ul class="comment">
-									<li><i class="fa fa-calendar" aria-hidden="true"></i>Jan 11, 2020</li>
-									<li><i class="fa fa-commenting-o" aria-hidden="true"></i>35</li>
+									<li><i class="fa fa-calendar" aria-hidden="true"></i>{{ recent_posts.create_at|date:"Y, M, D" }}</li>
+									<li><i class="fa fa-commenting-o" aria-hidden="true"></i>{{ comment_count }}</li>
 								</ul>
 							</div>
 						</div>
-						<!-- End Single Post -->
-						<!-- Single Post -->
-						<div class="single-post">
-							<div class="image">
-								<img src="https://via.placeholder.com/100x100" alt="#">
-							</div>
-							<div class="content">
-								<h5><a href="#">Top 10 Beautyful Women Dress in the world</a></h5>
-								<ul class="comment">
-									<li><i class="fa fa-calendar" aria-hidden="true"></i>Mar 05, 2019</li>
-									<li><i class="fa fa-commenting-o" aria-hidden="true"></i>59</li>
-								</ul>
-							</div>
-						</div>
-						<!-- End Single Post -->
-						<!-- Single Post -->
-						<div class="single-post">
-							<div class="image">
-								<img src="https://via.placeholder.com/100x100" alt="#">
-							</div>
-							<div class="content">
-								<h5><a href="#">Top 10 Beautyful Women Dress in the world</a></h5>
-								<ul class="comment">
-									<li><i class="fa fa-calendar" aria-hidden="true"></i>June 09, 2019</li>
-									<li><i class="fa fa-commenting-o" aria-hidden="true"></i>44</li>
-								</ul>
-							</div>
-						</div>
-						<!-- End Single Post -->
+						{% endfor %}
 					</div>
 					<!--/ End Single Widget -->
 					<!-- Single Widget -->
@@ -225,13 +182,9 @@
 					<div class="single-widget side-tags">
 						<h3 class="title">Tags</h3>
 						<ul class="tag">
-							<li><a href="#">business</a></li>
-							<li><a href="#">wordpress</a></li>
-							<li><a href="#">html</a></li>
-							<li><a href="#">multipurpose</a></li>
-							<li><a href="#">education</a></li>
-							<li><a href="#">template</a></li>
-							<li><a href="#">Ecommerce</a></li>
+							{% for tags in blog.tags.all %}
+							<li><a href="#">{{ tags.title }}</a></li>
+							{% endfor %}
 						</ul>
 					</div>
 					<!--/ End Single Widget -->
