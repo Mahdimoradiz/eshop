@@ -1,7 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
 from tinymce.models import HTMLField
-
+from account.models import User
 
 class Category(models.Model):
     title = models.CharField(max_length=80)

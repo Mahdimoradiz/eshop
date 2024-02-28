@@ -72,7 +72,7 @@
 								{% for blog_comment in blog.blog_comments.all %}
 								{% if blog_comment.parent == None %}
 								<div class="single-comment">
-									<img src="https://via.placeholder.com/80x80" alt="{{ blog_comment.username }}">
+									<img src="{{ user.profiles.picture.url }}" alt="{{ blog_comment.username }}">
 									<div class="content">
 										<h4>{{ blog_comment.username }}<span>{{ blog_comment.date|date:"Y, M, D" }}</span></h4>
 										<p>{{ blog_comment.message }}</p>
@@ -84,7 +84,7 @@
 								</div>
 								{% else %}
 								<div class="single-comment left">
-									<img src="https://via.placeholder.com/80x80" alt="#">
+									<img src="blog_comment.pictrue.url" alt="#">
 									<div class="content">
 										<h4>{{ blog_comment.username }}<span>{{ blog_comment.date|date:"Y, M, D" }}</span></h4>
 										<p>{{ blog_comment.message }}</p>
@@ -187,19 +187,6 @@
 							{% endfor %}
 						</ul>
 					</div>
-					<!--/ End Single Widget -->
-					<!-- Single Widget -->
-					<div class="single-widget newsletter">
-						<h3 class="title">Newslatter</h3>
-						<div class="letter-inner">
-							<h4>Subscribe & get news <br> latest updates.</h4>
-							<div class="form-inner">
-								<input type="email" placeholder="Enter your email">
-								<a href="#">Submit</a>
-							</div>
-						</div>
-					</div>
-					<!--/ End Single Widget -->
 				</div>
 			</div>
 		</div>
