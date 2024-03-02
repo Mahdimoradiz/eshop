@@ -3,28 +3,33 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None):
+    def create_user(self, username, email, password=None):
         """
-        Creates and saves a User with the given email, date of
-        birth and password.
+        Creates and saves a User with the given email and password.
         """
         if not email:
             raise ValueError("Users must have an email address")
 
+        if not username:
+            raise ValueError("User must have an username")
+
         user = self.model(
             email=self.normalize_email(email),
+            username=username,
         )
+        
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password=None):
+    def create_superuser(self, username, email, password=None):
         """
-        Creates and saves a superuser with the given email, date of
-        birth and password.
+        Creates and saves a superuser with the given email
+        , and password.
         """
         user = self.create_user(
+            username,
             email,
             password=password,
         )
@@ -39,6 +44,11 @@ class User(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
+    username = models.CharField(
+        verbose_name="username",
+        max_length=255,
+        unique=True,
+    )
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
     fullname = models.CharField(max_length=50, blank=True)
@@ -47,11 +57,11 @@ class User(AbstractBaseUser):
 
     objects = UserManager()
 
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = ["email"]
 
     def __str__(self):
-        return self.email
+        return self.username
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"

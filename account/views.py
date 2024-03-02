@@ -1,6 +1,10 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render
+from django.views import View
+from django.http import HttpResponse
 
 # Create your views here.
 
-def account(request):
-      return HttpResponse({"Status": "OK!"})
+class Profile(View):
+      def get(self, request,*args, **kwargs):
+            return HttpResponse('Hello world')
+
