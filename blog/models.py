@@ -29,21 +29,23 @@ class Blog(models.Model):
         ordering = ["-create_at"]
 
     def __str__(self):
-        return f"author by {self.author} on ({self.title[:12]})"
+        return f"author by --->( {self.author} ) on --->( {self.title[:12]})"
 
 
 class BlogComment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_comments')
     post = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='blog_comments')
     parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name="replies", blank=True, null=True)
-    email = models.EmailField()
-    username = models.CharField(max_length=30)
     message = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["-date"]
-
+        
     def __str__(self):
-        return f"Comment by {self.username} - on {self.post}"
+        return f"author by --->( {self.author} ) on --->( {self.post})"
+
+    
+    
+    

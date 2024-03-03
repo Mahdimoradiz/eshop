@@ -4,9 +4,6 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 class UserManager(BaseUserManager):
     def create_user(self, username, email, password=None):
-        """
-        Creates and saves a User with the given email and password.
-        """
         if not email:
             raise ValueError("Users must have an email address")
 
@@ -82,6 +79,6 @@ class User(AbstractBaseUser):
 # User profile
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profiles")
-    picture = models.ImageField(default="profile/default.png", upload_to="profile/user/picture")
+    picture = models.ImageField(upload_to="profile/user/picture", default="static/images/defult.png", blank=True, null=True)
     join_date = models.DateTimeField(auto_now_add=True)
     

@@ -1,4 +1,5 @@
 {% extends "include/base.html" %}
+{% load static %}
 
 {% block content %}
 <title>{% block title %} {{ blog.title }} {% endblock %}</title>
@@ -11,7 +12,7 @@
 				<div class="bread-inner">
 					<ul class="bread-list">
 						<li><a href="index1.html">Home<i class="ti-arrow-right"></i></a></li>
-						<li class="active"><a href="blog-single.html">{{ blog.title }}</a></li>
+						<li class="active"><a href="{% url 'blog:blog_detail' blog.id %}">{{ blog.title }}</a></li>
 					</ul>
 				</div>
 			</div>
@@ -35,8 +36,9 @@
 								<h2 class="blog-title">{{ blog.title }}</h2>
 								<div class="blog-meta">
 									<span class="author"><a href="#"><i class="fa fa-user"></i>By
-											{{ blog.author }}</a><a href="#"><i class="fa fa-calendar"></i>{{ blog.create_at|date:"Y, M, D" }}</a><a
-											href="#"><i class="fa fa-comments"></i>Comment ({{ comment_count }})</a></span>
+											{{ blog.author }}</a><a href="#"><i class="fa fa-calendar"></i>{{ blog.create_at|date:"Y, m, d" }}</a><a
+											href="#"><i class="fa fa-comments"></i>Comment ({{ comment_count }})</a>
+									</span>
 								</div>
 								<div class="content">
 									<p>
@@ -74,7 +76,7 @@
 								<div class="single-comment">
 									<img src="{{ user.profiles.picture.url }}" alt="{{ blog_comment.username }}">
 									<div class="content">
-										<h4>{{ blog_comment.username }}<span>{{ blog_comment.date|date:"Y, M, D" }}</span></h4>
+										<h4>{{ blog_comment.author }}<span>{{ blog_comment.date|date:"Y, m, d" }}</span></h4>
 										<p>{{ blog_comment.message }}</p>
 										<div class="button">
 											<a href="#" class="btn"><i class="fa fa-reply"
@@ -86,7 +88,7 @@
 								<div class="single-comment left">
 									<img src="blog_comment.pictrue.url" alt="#">
 									<div class="content">
-										<h4>{{ blog_comment.username }}<span>{{ blog_comment.date|date:"Y, M, D" }}</span></h4>
+										<h4>{{ blog_comment.username }}<span>{{ blog_comment.date|date:"Y, m, d" }}</span></h4>
 										<p>{{ blog_comment.message }}</p>
 									</div>
 								</div>
@@ -100,22 +102,9 @@
 								<div class="reply-head">
 									<h2 class="reply-title">Leave a Comment</h2>
 									<!-- Comment Form -->
-
-									<form class="form">
-										{% csrf_token %}
+									{% if user.is_authenticated %}
+									<form class="form" method="post">
 										<div class="row">
-											<div class="col-lg-6 col-md-6 col-12">
-												<div class="form-group">
-													<label>Your Name<span>*</span></label>
-													{{ comment_form.username }}
-												</div>
-											</div>
-											<div class="col-lg-6 col-md-6 col-12">
-												<div class="form-group">
-													<label>Your Email<span>*</span></label>
-													{{ comment_form.email }}
-												</div>
-											</div>
 											<div class="col-12">
 												<div class="form-group">
 													<label>Your Message<span>*</span></label>
@@ -128,8 +117,13 @@
 												</div>
 											</div>
 										</div>
+										{% else %}
+										<p class="alert alert-danger"><a style="color: #0f94eb; text-decoration: underline;" href="#login">Sign in</a> to add a comment.! </p>
+									{% csrf_token %}
+									{% endif %}
 									</form>
 									<!-- End Comment Form -->
+
 								</div>
 							</div>
 						</div>
@@ -175,10 +169,7 @@
 						</div>
 						{% endfor %}
 					</div>
-					<!--/ End Single Widget -->
-					<!-- Single Widget -->
-					<!--/ End Single Widget -->
-					<!-- Single Widget -->
+					
 					<div class="single-widget side-tags">
 						<h3 class="title">Tags</h3>
 						<ul class="tag">

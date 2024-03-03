@@ -3,14 +3,14 @@ from blog.models import Blog, Category, BlogComment
 from blog.forms import BlogCommentForm
 from django.views.generic.edit import FormMixin
 from django.shortcuts import get_object_or_404
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 class BlogView:
     model = Blog
     template_name = "blog/blog.html"
+    
 
-
-class BlogDetailView(BlogView, DetailView, FormMixin):
+class BlogDetailView(LoginRequiredMixin, BlogView, DetailView, FormMixin):
     form_class = BlogCommentForm
     success_url = "/"  # Redirect to home after successful form submission
 
@@ -39,39 +39,3 @@ class BlogDetailView(BlogView, DetailView, FormMixin):
         context['comment_form'] = comment_form
 
         return context
-
-
-            
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    # def get_form_kwargs(self):
-    #     kwargs = super().get_form_kwargs()
-    #     kwargs['instance'] = self.object  # Associate comment with the current blog post
-    #     return kwargs
-
-    # def form_valid(self, form):
-    #     if form.is_valid():
-    #         obj = form.save(commit=False)
-    #         obj.user = self.request.user
-    #         obj.blog_comments = self.get_object()  # Associate comment with the current blog post
-    #         obj.save()
-    #     else:
-    #         return redirect("/")
-    #     return super().form_valid(form)
-
-

@@ -88,4 +88,7 @@ admin.site.register(User, UserAdmin)
 # unregister the Group model from admin.
 admin.site.unregister(Group)
 # register user profile
-admin.site.register(models.Profile)
+
+@admin.register(models.Profile)
+class ProfileAdmin(admin.ModelAdmin):
+      list_display = ["user" ,"picture", "join_date"]
