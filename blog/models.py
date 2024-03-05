@@ -1,6 +1,8 @@
 from django.db import models
 from tinymce.models import HTMLField
 from account.models import User
+from django.urls import reverse
+
 
 class Category(models.Model):
     title = models.CharField(max_length=80)
@@ -46,6 +48,8 @@ class BlogComment(models.Model):
     def __str__(self):
         return f"author by --->( {self.author} ) on --->( {self.post})"
 
+    def get_absolute_url(self):
+        return reverse("blog-comment-detail", kwargs={"pk": self.pk})
     
     
     

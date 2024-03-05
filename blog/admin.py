@@ -23,3 +23,7 @@ class CategoryAdmin(admin.ModelAdmin):
 class BlogCommentAdmin(admin.ModelAdmin):
     list_display = ["author", "post", "date", "active"]
     list_filter = ["active"]
+    actions = ['approve_comments']
+
+    def approve_comments(self, request, queryset):
+        queryset.update(active=True)

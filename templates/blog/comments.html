@@ -1,0 +1,35 @@
+<div class="col-12">
+    <div class="comments">
+        <h3 class="comment-title">Comments ({{ comment_count }})</h3>
+        {% if comment_count == 0 %}
+        <h6 class="alert alert-danger">There is no comment</h6>
+        <br>
+        {% else %}
+        <!-- Single Comment -->
+            {% for blog_comment in blog.blog_comments.all %}
+                {% if blog_comment.parent == None %}
+                <div class="single-comment">
+                    <img src="{{ user.profiles.picture.url }}" alt="{{ blog_comment.username }}">
+                    <div class="content">
+                        <h4>{{ blog_comment.author }}<span>{{ blog_comment.date|date:"Y, m, d" }}</span></h4>
+                        <p>{{ blog_comment.message }}</p>
+                        <div class="button">
+                            <a href="#" class="btn"><i class="fa fa-reply"
+                                    aria-hidden="true"></i>Reply</a>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="single-comment left">
+                    <img src="blog_comment.pictrue.url" alt="#">
+                    <div class="content">
+                        <h4>{{ blog_comment.username }}<span>{{ blog_comment.date|date:"Y, m, d" }}</span></h4>
+                        <p>{{ blog_comment.message }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% include "blog/add_comment.html" %}
