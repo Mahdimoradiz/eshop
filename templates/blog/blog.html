@@ -63,7 +63,75 @@
 								</div>
 							</div>
 						</div>
-						{% include "blog/comments.html" %}
+						<div class="col-12">
+							<div class="comments">
+								<h3 class="comment-title">Comments ({{ comment_count }})</h3>
+								{% if comment_count == 0 %}
+								<h6 class="alert alert-danger">There is no comment</h6>
+								<br>
+								{% else %}
+								<!-- Single Comment -->
+									{% for blog_comment in blog.blog_comments.all %}
+										{% if blog_comment.parent == None %}
+										<div class="single-comment">
+											
+											<img src="{{ user.profiles.picture.url }}" alt="{{ blog_comment.username }}">
+											<div class="content">
+												<form class="form" method="post" action="{% url "blog:blog_comment" pk=blog.pk %}">
+													<i style="color: red;
+													position: absolute;
+													margin: -1px 62px 16px;
+													font-size: 17px;" class="fa fa-trash" aria-hidden="true"></i>
+												</form>
+												<h4>{{ blog_comment.author }}<span>{{ blog_comment.date|date:"Y, m, d" }}</span></h4>
+												<p>{{ blog_comment.message }}</p>
+												<div class="button">
+													<a href="#" class="btn"><i class="fa fa-reply"
+															aria-hidden="true"></i>Reply</a>
+												</div>
+											</div>
+										</div>
+										{% else %}
+										<div class="single-comment left">
+											<img src="blog_comment.pictrue.url" alt="#">
+											<div class="content">
+												<h4>{{ blog_comment.username }}<span>{{ blog_comment.date|date:"Y, m, d" }}</span></h4>
+												<p>{{ blog_comment.message }}</p>
+											</div>
+										</div>
+										{% endif %}
+									{% endfor %}
+								{% endif %}
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="reply">
+								<div class="reply-head">
+									<h2 class="reply-title">Leave a Comment</h2>
+									<!-- Comment Form -->
+									{% if user.is_authenticated %}
+									<form class="form" method="post" action="{% url "blog:blog_comment" pk=blog.pk %}">
+										{% csrf_token %}
+										<div class="row">
+											<div class="col-12">
+												<div class="form-group">
+													<label>Your Message<span>*</span></label>
+													{{ form.message }}
+												</div>
+											</div>
+											<div class="col-12">
+												<div class="form-group button">
+													<button type="submit" class="btn">Post comment</button>
+												</div>
+											</div>
+										</div>
+									{% else %}
+										<p class="alert alert-danger"><a style="color: #0f94eb; text-decoration: underline;" href="#login">Sign in</a> to add a comment.! </p>
+									{% endif %}
+									</form>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -1,28 +1,22 @@
 from django import forms
-from account.models import User
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
-from account.admin import *
-
-
-class UserLoginForm(forms.ModelForm):
-    username = forms.CharField(max_length=65, widget=forms.TextInput(attrs={'class': 'form-control form-control-lg', 'id': 'typeEmailX-2'}))
-    password = forms.CharField(max_length=65, widget=forms.PasswordInput(attrs={'class': 'form-control form-control-lg'}))
-    
-    class Meta:
-        model = User
-        fields = ["username",]
-
+from account.models import User
+from django.core import validators
+from account.validators import StartWithZero
 
 class UserCreationForm(forms.ModelForm):
+    """A form for creating new users. Includes all the required
+    fields, plus a repeated password."""
+
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
     password2 = forms.CharField(
-            label="Password confirmation", widget=forms.PasswordInput
+        label="Password confirmation", widget=forms.PasswordInput
     )
 
     class Meta:
         model = User
-        fields = ["email", "username"]
+        fields = ["phone"]
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -42,8 +36,56 @@ class UserCreationForm(forms.ModelForm):
 
 
 class UserChangeForm(forms.ModelForm):
+    """A form for updating users. Includes all the fields on
+    the user, but replaces the password field with admin's
+    disabled password hash display field.
+    """
     password = ReadOnlyPasswordHashField()
 
     class Meta:
         model = User
-        fields = ["email", "username", "password", "is_active", "is_admin"]
+        fields = ["phone", "email", "fullname", "password", "is_active", "is_admin"]
+
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control form-control-lg',
+            }
+        ),
+        validators=[
+            validators.MaxLengthValidator(11),
+            StartWithZero()
+            ]
+        )
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs={'class': 'form-control form-control-lg'
+               }
+        )
+        )
+    
+    
+class OtpLoginForm(forms.Form):
+    phone = forms.CharField(widget=forms.TextInput(
+    attrs={
+        'class': 'form-control form-control-lg',
+        }
+    ),
+    validators=[
+        validators.MaxLengthValidator(11),
+        StartWithZero()
+        ]
+    )
+    
+
+class CheckOtpForm(forms.Form):
+    code = forms.CharField(widget=forms.TextInput(
+    attrs={
+        'class': 'form-control form-control-lg',
+        }
+    ),
+    validators=[
+        validators.MaxLengthValidator(4),
+        ]
+    )

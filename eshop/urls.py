@@ -9,9 +9,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('tinymce/', include('tinymce.urls')),
-    path('blog/', include('blog.urls')),
+    path('', include('home.urls')),
     path('account/', include('account.urls')),
-    path('', views.home, name="home"),
-    # testing urls
-    
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] 
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
