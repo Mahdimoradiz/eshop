@@ -42,7 +42,7 @@ class UserRegisterView(View):
             cd = form.cleaned_data
             randcode = randint(1000, 9999)
             print(randcode)
-            # SMS.verification({'receptor': cd["phone"],'type': '1','template': 'rancode','param1': {randcode}})
+            SMS.verification({'receptor': cd["phone"],'type': '1','template': 'rancode','param1': {randcode}})
             token = get_random_string(length=100)
             Otp.objects.create(phone=cd["phone"], code=randcode)
             return redirect(reverse('account:check_otp') + f'?phone={token}')
@@ -72,6 +72,8 @@ class CheckOtpView(View):
         return render(request, "account/otp_code.html", {'form': form})
     
 
-def user_logout(request):
-    logout(request)
-    return redirect('/')
+
+class UserLogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect('/')
