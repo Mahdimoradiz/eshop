@@ -1,5 +1,7 @@
 from product.models import Product
+from django import template
 
+register = template.Library()
 
 CART_SESSION_ID = 'cart'
 
@@ -19,6 +21,11 @@ class Cart:
         for item in cart.values():
             item['product'] = Product.objects.get(id=int(item['id']))
             item['total'] = int(item['quantity']) * int(item['price'])
+            item['unique_id'] = self.unique_id_generator(
+                Product.id,
+                item['color'],
+                item['size'],
+                )
             yield item
     
     
@@ -41,5 +48,15 @@ class Cart:
         self.save()
     
     
+    def delete(self, id):
+        if id in self.cart:
+            del self.cart[id]
+            self.save()
+    
+    
     def save(self):
         self.session.modified = True
+    
+    @register.simple_tag
+    def count_items(self):
+        return len(self.cart)

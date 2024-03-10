@@ -7,17 +7,37 @@ from cart.order import Cart
 
 class CartDetailView(View):
     def get(self, request):
+        # Create instance of card class using request
         cart = Cart(request)
-        return render(request, "cart/cart_detail.html", {'cart': cart})
-    
+        # Calculate the number of items in the card using Kant
+        item_count = cart.count_items()
+        context = {
+            'cart': cart,
+            'item_count': item_count
+            }
+        return render(request, "cart/cart_detail.html", context)
     
     
 class CartAddView(View):
     def post(self, request, pk):
         product = get_object_or_404(Product, id=pk)
-        size, color, quantity = request.POST.get('size'), request.POST.get('color'), request.POST.get('quantity')
-        print(size, color, quantity)
+        # Get product information from the request
+        quantity =  request.POST.get('quantity')
+        color = request.POST.get('color', 'empty')
+        size = request.POST.get('size', 'empty')
+        # Create instance of card class using request
         cart = Cart(request)
-        cart.add(product, quantity, color, size)
+        # Add product to card
+        cart.add(product, color, size, quantity)
         return redirect("cart:cart_detail")
-        
+   
+  
+class CartDeleteView(View):
+    def get(self, request, id):
+        # Create instance of card class using request
+        cart = Cart(request)
+        # Remove the product from the card 
+        cart.delete(id)
+        return redirect("cart:cart_detail")
+    
+    
