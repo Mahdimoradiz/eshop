@@ -1,5 +1,5 @@
 {% extends "include/base.html" %}
-
+{% load static %}
 
 {% block content %}
 
@@ -8,20 +8,22 @@
 	<!-- Slider Area -->
 	<section class="hero-slider">
 		<!-- Single Slider -->
-		<div class="single-slider">
+		<div class="single-slider" style="background-image: url('{% static 'images/cat-2.jpg' %}');">
 			<div class="container">
 				<div class="row no-gutters">
 					<div class="col-lg-9 offset-lg-3 col-12">
 						<div class="text-inner">
 							<div class="row">
 								<div class="col-lg-7 col-12">
+									{% for suggeste_header in suggeste_header.all %}
 									<div class="hero-text">
-										<h1><span>UP TO 50% OFF </span>Shirt For Man</h1>
-										<p>Maboriosam in a nesciung eget magnae <br> dapibus disting tloctio in the find it pereri <br> odiy maboriosm.</p>
+										<h1><span>UP TO {{ suggeste_header.discount }}% OFF </span>{{ suggeste_header.title }}</h1>
+										<p style="color: #ffff;">{{ suggeste_header.description|truncatechars:136 }}</p>
 										<div class="button">
 											<a href="#" class="btn">Shop Now!</a>
 										</div>
 									</div>
+									{% endfor %}
 								</div>
 							</div>
 						</div>

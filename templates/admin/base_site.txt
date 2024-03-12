@@ -1,0 +1,60 @@
+{% extends 'admin/base.html' %}
+
+{% block extrastyle %}{{ block.super }}
+<style>
+html[data-theme="light"], :root {
+  --secondary: #ff7c03;
+}
+
+.vTextField {
+  border-radius: 15px;
+}
+
+.vLargeTextField {
+  border: 2px solid gray;
+  border-radius: 15px;
+}
+
+.div.breadcrumbs {
+  background-color: red;
+}
+.module h2, .module caption, .inline-group h2 {
+  border-radius: 3px;
+}
+div.breadcrumbs {
+  background-color: #333;
+}
+.button.default, input[type=submit].default, .submit-row input.default {
+  background-color: #333;
+}
+.module {
+  margin-bottom: 43px;
+}
+#user-tools, #logout-form button {
+  font-weight: 800;
+ }
+ input[type=text], input[type=password], input[type=email], input[type=url], input[type=number], input[type=tel], textarea, select, .vTextField {
+  border: 2px solid gray;
+  border-radius: 9px;
+ }
+/* scrollbar */
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #333;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ff7c03;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ff7c03;
+}
+</style>
+{% endblock %}
+

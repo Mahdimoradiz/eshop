@@ -1,9 +1,17 @@
 from django.db import models
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+
+
+class Image(models.Model):
+    image = models.ImageField(upload_to="products")
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
 
 
 class Size(models.Model):
     title = models.CharField(max_length=20)
-
 
     def __str__(self):
         return self.title
@@ -11,7 +19,6 @@ class Size(models.Model):
     
 class Color(models.Model):
     title = models.CharField(max_length=20)
-
 
     def __str__(self):
         return self.title
@@ -22,13 +29,18 @@ class Product(models.Model):
     description = models.TextField()
     price = models.IntegerField()
     discount = models.SmallIntegerField()
-    image = models.ImageField(upload_to="products")
     size = models.ManyToManyField(Size, related_name="products")
     color = models.ManyToManyField(Color, related_name="products")
-
+    
+    update_at = models.DateField(auto_now=True, blank=True, null=True)
+    create_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    suggeste = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
+    
+    class Meta:
+        ordering = ['-create_at', '-update_at']
     
     
 class Information(models.Model):

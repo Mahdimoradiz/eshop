@@ -52,8 +52,9 @@ class User(AbstractBaseUser):
     REQUIRED_FIELDS = []
     
     def save(self, *args, **kwargs):
-        self.fullname = self.fullname.replace(' ', '_')
-        super(User, self).save(args, kwargs)            
+        if not self.pk:
+            self.fullname = self.fullname.replace(' ', '_')
+        super(User, self).save(*args, **kwargs)        
 
     def __str__(self):
         return self.phone
