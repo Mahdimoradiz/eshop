@@ -1,11 +1,11 @@
 from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-
+from tinymce.models import HTMLField
 
 class Image(models.Model):
     image = models.ImageField(upload_to="products")
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, related_name="images")
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
 
@@ -31,10 +31,11 @@ class Product(models.Model):
     discount = models.SmallIntegerField()
     size = models.ManyToManyField(Size, related_name="products")
     color = models.ManyToManyField(Color, related_name="products")
-    
+    image = models.ImageField(upload_to="products")
     update_at = models.DateField(auto_now=True, blank=True, null=True)
     create_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     suggeste = models.BooleanField(default=False)
+    more_description = HTMLField()
 
     def __str__(self):
         return self.title

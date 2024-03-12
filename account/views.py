@@ -7,7 +7,9 @@ from random import randint
 from django.utils.crypto import get_random_string
 from account.models import Otp, User
 
-SMS = ghasedakpack.Ghasedak("428e2ff4e66399c604d698a366ce9d752428c2aad134471334cdff85e6721862")
+TOKEN = "428e2ff4e66399c604d698a366ce9d752428c2aad134471334cdff85e6721862"
+
+SMS = ghasedakpack.Ghasedak(TOKEN)
 
 class UserLoginView(View):
     def get(self, request):
@@ -42,7 +44,13 @@ class UserRegisterView(View):
             cd = form.cleaned_data
             randcode = randint(1000, 9999)
             print(randcode)
-            SMS.verification({'receptor': cd["phone"],'type': '1','template': 'rancode','param1': {randcode}})
+            sms_info = {
+                'receptor': cd["phone"],
+                'type': '1',
+                'template': 'rancode',
+                'param1': randcode
+            }
+            SMS.verification(sms_info)
             token = get_random_string(length=100)
             Otp.objects.create(phone=cd["phone"], code=randcode)
             return redirect(reverse('account:check_otp') + f'?phone={token}')

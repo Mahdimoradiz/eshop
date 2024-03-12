@@ -23,6 +23,10 @@ class CartAddView(View):
         product = get_object_or_404(Product, id=pk)
         # Get product information from the request
         quantity =  request.POST.get('quantity')
+        if quantity is not None:
+            quantity = int(quantity)
+        else:
+            quantity = 1
         color = request.POST.get('color', 'empty')
         size = request.POST.get('size', 'empty')
         # Create instance of card class using request

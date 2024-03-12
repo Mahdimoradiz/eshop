@@ -48,7 +48,7 @@
 							<tr>
 								<td class="image" data-title="No"><img src="{{ item.product.image.url }}" alt="#"></td>
 								<td class="product-des" data-title="Description">
-									<p class="product-name"><a href="#">{{ item.product.title }}</a></p>
+									<p class="product-name"><a href="{% url 'product:product_detail' item.id %}">{{ item.product.title }}</a></p>
 								</td>
 								<td class="price" data-title="Price"><span>{{ item.price }}</span></td>
 								<td class="qty" data-title="Qty"><!-- Input Order -->
