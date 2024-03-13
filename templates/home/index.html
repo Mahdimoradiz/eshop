@@ -15,15 +15,13 @@
 						<div class="text-inner">
 							<div class="row">
 								<div class="col-lg-7 col-12">
-									{% for suggeste_header in suggeste_header.all %}
 									<div class="hero-text">
-										<h1 style="color: #44444;"><span>UP TO {{ suggeste_header.discount }}% OFF </span>{{ suggeste_header.title }}</h1>
+										<h1 style="color: #333;"><span>UP TO {{ suggeste_header.discount }}% OFF </span>{{ suggeste_header.title }}</h1>
 										<p style="color: #ffff;">{{ suggeste_header.description|truncatechars:136 }}</p>
 										<div class="button">
 											<a href="#" class="btn">Shop Now!</a>
 										</div>
 									</div>
-									{% endfor %}
 								</div>
 							</div>
 						</div>

@@ -36,6 +36,7 @@ class Product(models.Model):
     create_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     suggeste = models.BooleanField(default=False)
     more_description = HTMLField()
+    views = models.IntegerField(default=0, null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -45,7 +46,11 @@ class Product(models.Model):
     
     
 class Information(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="informations")
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        related_name="informations"
+        )
     text = models.TextField()
     
     def __str__(self):

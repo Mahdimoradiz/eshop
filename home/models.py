@@ -1,7 +1,8 @@
 from django.db import models
 
-# Create your models here.
 
 
-class Person(models.Model):
-    title = models.CharField(max_length=20)
+class Setting(models.Model):
+    logo = models.ImageField(upload_to="site/settings")
+    phone = models.IntegerField()
+    
