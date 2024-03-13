@@ -48,9 +48,13 @@ class Cart:
         self.save()
     
     
+    def remove_cart(self):
+        del self.session[CART_SESSION_ID]
+    
+    
     def total(self):
         cart = self.cart.values()
-        total = sum(item['total'] for item in cart)
+        total = sum(int(item['price']) * int(item['quantity']) for item in cart)
         return total
     
     
