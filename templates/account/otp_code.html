@@ -2,64 +2,69 @@
 {% load static %}
 
 {% block content %}
-  <style>
-    input {
-      padding: 7px;
-      margin-top: 12px;
-    }
-    label {
-      display: table-cell;
-    }
-    .alert {
-      padding: 5px;
-      background-color: #f44336;
-      color: white;
-    }
-    
-    .closebtn {
-      margin-left: 15px;
-      color: white;
-      font-weight: bold;
-      float: right;
-      font-size: 22px;
-      line-height: 20px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    
-    .closebtn:hover {
-      color: black;
-    }
-  </style>
-  <section class="vh-100">
-      <div class="container py-5 h-100">
-          <div class="row d-flex justify-content-center align-items-center h-100">
-              <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                  <div class="card shadow-2-strong" style="border-radius: 1rem;">
-                      <div class="card-body p-5 text-center">
-                        <h3 class="mb-5">check otp</h3>
-                        <form method="post">
-                          {% csrf_token %}
-                          {% for error in form.code.errors %}
-                          <div class="alert">
-                            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                            {{ form.errors }}
-                          </div>
-                          {% endfor %}
-                          <div class="form-outline mb-4">
-                            <label style="display: table-cell;" class="form-label" for="typeEmailX-2">Otp code :</label>
-                            {{ form.code }}
-                          </div>
-                           <br>
-                          <button class="btn btn-warning btn-lg btn-block" style="background-color: #f7941d;" type="submit">Login</button>
-                          <!--<hr class="my-4" />
-                          <button class="btn btn-danger btn-block " type="submit"><i class="fa fa-google"></i> Sign in with google</button>
-                          <button class="btn btn-lg btn-block  mb-2" type="submit"><i class="fa fa-facebook"></i> Sign in with facebook</button>-->
-                        </form>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </section>
+    <style>
+        input {
+            padding: 7px;
+            margin-top: 12px;
+        }
+
+        label {
+            display: table-cell;
+        }
+
+        .alert {
+            padding: 5px;
+            background-color: #f44336;
+            color: white;
+        }
+
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .closebtn:hover {
+            color: black;
+        }
+    </style>
+    <section class="vh-100">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                        <div class="card-body p-5 text-center">
+                            <h3 class="mb-5">check otp</h3>
+                            <form method="post">
+                                {% csrf_token %}
+                                {% for error in form.code.errors %}
+                                    <div class="alert">
+                                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                                        {{ form.errors }}
+                                    </div>
+                                {% endfor %}
+                                <div class="form-outline mb-4">
+                                    <label style="display: table-cell;" class="form-label" for="typeEmailX-2">Otp code
+                                        :</label>
+                                    {{ form.code }}
+                                </div>
+                                <br>
+                                <button class="btn btn-warning btn-lg btn-block" style="background-color: #f7941d;"
+                                        type="submit">Login
+                                </button>
+                                <!--<hr class="my-4" />
+                                <button class="btn btn-danger btn-block " type="submit"><i class="fa fa-google"></i> Sign in with google</button>
+                                <button class="btn btn-lg btn-block  mb-2" type="submit"><i class="fa fa-facebook"></i> Sign in with facebook</button>-->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

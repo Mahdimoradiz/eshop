@@ -42,7 +42,7 @@ class User(AbstractBaseUser):
         null=True
     )
     fullname = models.CharField(max_length=50)
-    phone = models.CharField(max_length=12, unique=True,)
+    phone = models.CharField(max_length=12, unique=True, )
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
@@ -50,11 +50,11 @@ class User(AbstractBaseUser):
 
     USERNAME_FIELD = "phone"
     REQUIRED_FIELDS = []
-    
+
     def save(self, *args, **kwargs):
         if not self.pk:
             self.fullname = self.fullname.replace(' ', '_')
-        super(User, self).save(*args, **kwargs)        
+        super(User, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.phone
@@ -74,17 +74,18 @@ class User(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
-    
+
+
 class Otp(models.Model):
     token = models.CharField(max_length=200, null=True)
     phone = models.CharField(max_length=11)
     code = models.SmallIntegerField()
     expiration_date = models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         return self.phone
-    
-    
+
+
 class Address(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="addresses")
     first_name = models.CharField(max_length=30)
@@ -93,9 +94,6 @@ class Address(models.Model):
     address = models.CharField(max_length=300)
     phone = models.CharField(max_length=12)
     postal_code = models.CharField(max_length=30)
-    
-    
+
     def __str__(self):
         return self.user.phone
-    
-    

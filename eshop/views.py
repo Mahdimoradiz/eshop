@@ -4,12 +4,7 @@ from django.views.generic import TemplateView
 from django.views import View
 
 
-
 def home(request):
     return render(request, 'main/home.html')
 
-
 # here writng testing view
-
-
-        

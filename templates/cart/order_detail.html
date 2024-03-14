@@ -1,187 +1,194 @@
 
-	
+
 {% extends "include/base.html" %}
-	
+
 
 
 {% block content %}
 
 
-	<!-- Breadcrumbs -->
-	<div class="breadcrumbs">
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<div class="bread-inner">
-						<ul class="bread-list">
-							<li><a href="index1.html">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a href="blog-single.html">Cart</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End Breadcrumbs -->
-			
-	<!-- Shopping Cart -->
-	{% if cart.total == 0 %}
-	
-	{% else %}
-	<div class="shopping-cart section">
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<!-- Shopping Summery -->
-					<table class="table shopping-summery">
-						<thead>
-							<tr class="main-hading">
-								<th>PRODUCT</th>
-								<th>NAME</th>
-								<th class="text-center">UNIT PRICE</th>
-								<th class="text-center">QUANTITY</th>
-								<th class="text-center">COLOR</th> 
-								<th class="text-center">SIZE</th> 
-								<th class="text-center">TOTAL</th> 
-								<th class="text-center"><i class="ti-trash remove-icon"></i></th>
-							</tr>
-						</thead>
-						<tbody>
-							{% for item in order.items.all %}
-							<tr>
-								<td class="image" data-title="No"><img src="{{ item.product.image.url }}" alt="#"></td>
-								<td class="product-des" data-title="Description">
-									<p class="product-name"><a href="{% url 'product:product_detail' item.id %}">{{ item.product.title }}</a></p>
-								</td>
-								<td class="price" data-title="Price"><span>{{ order.total_price }}</span></td>
-								<td class="qty" data-title="Qty"><!-- Input Order -->
-									<span>{{ item.quantity }}</span>
-								</td>
-								<td class="total-amount" data-title="Color"><span>{{ item.color }}</span></td>
-								<td class="total-amount" data-title="Size"><span>{{ item.size }}</span></td>
-								<td class="total-amount" data-title="Total"><span>${{ item.total }}</span></td>
-								<td class="action" data-title="Remove"><a href=""><i class="ti-trash remove-icon"></i></a></td>
-							</tr>
-							{% endfor %}
-						</tbody>
-					</table>
-					<!--/ End Shopping Summery -->
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-12">
-					<!-- Total Amount -->
-					<div class="total-amount">
-						<div class="row">
-							<div class="col-lg-8 col-md-5 col-12">
-								<div class="left">
-									<div class="coupon">
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-4 col-md-7 col-12">
-								<div class="right">
-									<ul>
-										<li class="last">You Pay<span>${{ order.total_price }}</span></li>
-									</ul>
-									<div class="button5">
-										<a href="{% url "cart:order_create" %}" style="background-color: green;" class="btn">Pay</a>
-                                        <hr>
-                                        {% if request.user.addresses.all %}
-                                            <label for="inlineFormCustomSelect">choose your address</label>
-                                            <select class="custom" id="inlineFormCustomSelect">
-                                                {% for address in request.user.addresses.all %}
-                                                <option value="1">{{ address.address }}</option>
-                                                {% endfor %}
-                                            </select>
-                                            <a href="{% url "account:add_address" %}?next={% url 'cart:order_detail' order.id %}" class="btn">add address</a>
-                                        {% else %}
-										<a href="{% url "account:add_address" %}?next={% url 'cart:order_detail' order.id %}" class="btn">add address</a>
-                                        {% endif %}
-									</div>
-   
-								</div>
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="bread-inner">
+                        <ul class="bread-list">
+                            <li><a href="index1.html">Home<i class="ti-arrow-right"></i></a></li>
+                            <li class="active"><a href="blog-single.html">Cart</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Breadcrumbs -->
 
-							</div>
-						</div>
-					</div>
-					<!--/ End Total Amount -->
-				</div>
-			</div>
-		</div>
-	</div>
-	{% endif %}
+    <!-- Shopping Cart -->
+    {% if cart.total == 0 %}
 
-	<!--/ End Shopping Cart -->
-			
-	<!-- Start Shop Services Area  -->
-	<section class="shop-services section">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3 col-md-6 col-12">
-					<!-- Start Single Service -->
-					<div class="single-service">
-						<i class="ti-rocket"></i>
-						<h4>Free shiping</h4>
-						<p>Orders over $100</p>
-					</div>
-					<!-- End Single Service -->
-				</div>
-				<div class="col-lg-3 col-md-6 col-12">
-					<!-- Start Single Service -->
-					<div class="single-service">
-						<i class="ti-reload"></i>
-						<h4>Free Return</h4>
-						<p>Within 30 days returns</p>
-					</div>
-					<!-- End Single Service -->
-				</div>
-				<div class="col-lg-3 col-md-6 col-12">
-					<!-- Start Single Service -->
-					<div class="single-service">
-						<i class="ti-lock"></i>
-						<h4>Sucure Payment</h4>
-						<p>100% secure payment</p>
-					</div>
-					<!-- End Single Service -->
-				</div>
-				<div class="col-lg-3 col-md-6 col-12">
-					<!-- Start Single Service -->
-					<div class="single-service">
-						<i class="ti-tag"></i>
-						<h4>Best Peice</h4>
-						<p>Guaranteed price</p>
-					</div>
-					<!-- End Single Service -->
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End Shop Newsletter -->
-	
-	<!-- Start Shop Newsletter  -->
-	<section class="shop-newsletter section">
-		<div class="container">
-			<div class="inner-top">
-				<div class="row">
-					<div class="col-lg-8 offset-lg-2 col-12">
-						<!-- Start Newsletter Inner -->
-						<div class="inner">
-							<h4>Newsletter</h4>
-							<p> Subscribe to our newsletter and get <span>10%</span> off your first purchase</p>
-							<form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
-								<input name="EMAIL" placeholder="Your email address" required="" type="email">
-								<button class="btn">Subscribe</button>
-							</form>
-						</div>
-						<!-- End Newsletter Inner -->
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End Shop Newsletter -->
-	
+    {% else %}
+        <div class="shopping-cart section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Shopping Summery -->
+                        <table class="table shopping-summery">
+                            <thead>
+                            <tr class="main-hading">
+                                <th>PRODUCT</th>
+                                <th>NAME</th>
+                                <th class="text-center">UNIT PRICE</th>
+                                <th class="text-center">QUANTITY</th>
+                                <th class="text-center">COLOR</th>
+                                <th class="text-center">SIZE</th>
+                                <th class="text-center">TOTAL</th>
+                                <th class="text-center"><i class="ti-trash remove-icon"></i></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in order.items.all %}
+                                <tr>
+                                    <td class="image" data-title="No"><img src="{{ item.product.image.url }}" alt="#">
+                                    </td>
+                                    <td class="product-des" data-title="Description">
+                                        <p class="product-name"><a
+                                                href="{% url 'product:product_detail' item.id %}">{{ item.product.title }}</a>
+                                        </p>
+                                    </td>
+                                    <td class="price" data-title="Price"><span>{{ order.total_price }}</span></td>
+                                    <td class="qty" data-title="Qty"><!-- Input Order -->
+                                        <span>{{ item.quantity }}</span>
+                                    </td>
+                                    <td class="total-amount" data-title="Color"><span>{{ item.color }}</span></td>
+                                    <td class="total-amount" data-title="Size"><span>{{ item.size }}</span></td>
+                                    <td class="total-amount" data-title="Total"><span>${{ item.total }}</span></td>
+                                    <td class="action" data-title="Remove"><a href=""><i
+                                            class="ti-trash remove-icon"></i></a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <!--/ End Shopping Summery -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Total Amount -->
+                        <div class="total-amount">
+                            <div class="row">
+                                <div class="col-lg-8 col-md-5 col-12">
+                                    <div class="left">
+                                        <div class="coupon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-7 col-12">
+                                    <div class="right">
+                                        <ul>
+                                            <li class="last">You Pay<span>${{ order.total_price }}</span></li>
+                                        </ul>
+                                        <div class="button5">
+                                            <a href="{% url "cart:order_create" %}" style="background-color: green;"
+                                               class="btn">Pay</a>
+                                            <hr>
+                                            {% if request.user.addresses.all %}
+                                                <label for="inlineFormCustomSelect">choose your address</label>
+                                                <select class="custom" id="inlineFormCustomSelect">
+                                                    {% for address in request.user.addresses.all %}
+                                                        <option value="1">{{ address.address }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                <a href="{% url "account:add_address" %}?next={% url 'cart:order_detail' order.id %}"
+                                                   class="btn">add address</a>
+                                            {% else %}
+                                                <a href="{% url "account:add_address" %}?next={% url 'cart:order_detail' order.id %}"
+                                                   class="btn">add address</a>
+                                            {% endif %}
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--/ End Total Amount -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <!--/ End Shopping Cart -->
+
+    <!-- Start Shop Services Area  -->
+    <section class="shop-services section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Service -->
+                    <div class="single-service">
+                        <i class="ti-rocket"></i>
+                        <h4>Free shiping</h4>
+                        <p>Orders over $100</p>
+                    </div>
+                    <!-- End Single Service -->
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Service -->
+                    <div class="single-service">
+                        <i class="ti-reload"></i>
+                        <h4>Free Return</h4>
+                        <p>Within 30 days returns</p>
+                    </div>
+                    <!-- End Single Service -->
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Service -->
+                    <div class="single-service">
+                        <i class="ti-lock"></i>
+                        <h4>Sucure Payment</h4>
+                        <p>100% secure payment</p>
+                    </div>
+                    <!-- End Single Service -->
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Service -->
+                    <div class="single-service">
+                        <i class="ti-tag"></i>
+                        <h4>Best Peice</h4>
+                        <p>Guaranteed price</p>
+                    </div>
+                    <!-- End Single Service -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Shop Newsletter -->
+
+    <!-- Start Shop Newsletter  -->
+    <section class="shop-newsletter section">
+        <div class="container">
+            <div class="inner-top">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2 col-12">
+                        <!-- Start Newsletter Inner -->
+                        <div class="inner">
+                            <h4>Newsletter</h4>
+                            <p> Subscribe to our newsletter and get <span>10%</span> off your first purchase</p>
+                            <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
+                                <input name="EMAIL" placeholder="Your email address" required="" type="email">
+                                <button class="btn">Subscribe</button>
+                            </form>
+                        </div>
+                        <!-- End Newsletter Inner -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Shop Newsletter -->
+
 
 
 {% endblock content %}

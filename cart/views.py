@@ -15,15 +15,15 @@ class CartDetailView(View):
         context = {
             'cart': cart,
             'item_count': item_count
-            }
+        }
         return render(request, "cart/cart_detail.html", context)
-    
-    
+
+
 class CartAddView(View):
     def post(self, request, pk):
         product = get_object_or_404(Product, id=pk)
         # Get product information from the request
-        quantity =  request.POST.get('quantity')
+        quantity = request.POST.get('quantity')
         if quantity is not None:
             quantity = int(quantity)
         else:
@@ -35,8 +35,8 @@ class CartAddView(View):
         # Add product to card
         cart.add(product, color, size, quantity)
         return redirect("cart:cart_detail")
-   
-  
+
+
 class CartDeleteView(View):
     def get(self, request, id):
         # Create instance of card class using request
@@ -62,8 +62,8 @@ class OrderCreationView(View):
                 product=item['product'],
                 color=item['color'],
                 size=item['size'],
-                quantity = item['quantity'],
-                price = item['price'],
-                )
+                quantity=item['quantity'],
+                price=item['price'],
+            )
         cart.remove_cart()
         return redirect('cart:order_detail', order.id)

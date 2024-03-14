@@ -11,12 +11,12 @@ TOKEN = "428e2ff4e66399c604d698a366ce9d752428c2aad134471334cdff85e6721862"
 
 SMS = ghasedakpack.Ghasedak(TOKEN)
 
+
 class UserLoginView(View):
     def get(self, request):
         form = LoginForm()
         return render(request, "account/login.html", {'form': form})
-    
-    
+
     def post(self, request):
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -29,15 +29,15 @@ class UserLoginView(View):
                 form.add_error("username", "invalid number")
         else:
             form.add_error("username", "invalid number")
-            
+
         return render(request, "account/login.html", {'form': form})
-     
-           
+
+
 class UserRegisterView(View):
     def get(self, request):
         form = OtpLoginForm()
         return render(request, "account/register.html", {'form': form})
-    
+
     def post(self, request):
         form = OtpLoginForm(request.POST)
         if form.is_valid():
@@ -57,13 +57,13 @@ class UserRegisterView(View):
         else:
             form.add_error("phone", "invalid data")
         return render(request, "account/register.html", {'form': form})
-    
+
 
 class CheckOtpView(View):
     def get(self, request):
         form = CheckOtpForm()
         return render(request, "account/otp_code.html", {'form': form})
-    
+
     def post(self, request):
         token = request.GET.get('token')
         form = CheckOtpForm(request.POST)
@@ -78,13 +78,13 @@ class CheckOtpView(View):
         else:
             form.add_error("code", "invalid data")
         return render(request, "account/otp_code.html", {'form': form})
-    
+
 
 class AddAddressView(View):
     def get(self, request):
         form = AddressCreationForm()
         return render(request, "account/add_address.html", {'form': form})
-    
+
     def post(self, request):
         form = AddressCreationForm(request.POST)
         if form.is_valid():
@@ -94,7 +94,7 @@ class AddAddressView(View):
             next_page = request.GET.get('next')
             if next_page:
                 return redirect(next_page)
-            
+
         return render(request, "account/add_address.html", {'form': form})
 
 
