@@ -9,4 +9,5 @@ urlpatterns = [
     path('delete/<str:id>', views.CartDeleteView.as_view(), name="delete_item_cart"),
     path('order/<int:pk>', views.OrderDetailView.as_view(), name="order_detail"),
     path('order/add', views.OrderCreationView.as_view(), name="order_create"),
+    path('discount/<int:pk>', views.ApplyDiscountCodeVeiw.as_view(), name="discount_view"),
 ]

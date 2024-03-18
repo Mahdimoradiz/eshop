@@ -81,7 +81,8 @@
                                 <div class="col-lg-8 col-md-5 col-12">
                                     <div class="left">
                                         <div class="coupon">
-                                            <form action="#" target="_blank">
+                                            <form method="post" action="">
+                                                {% csrf_token %}
                                                 <input name="Coupon" placeholder="Enter Your Coupon">
                                                 <button class="btn">Apply</button>
                                             </form>
