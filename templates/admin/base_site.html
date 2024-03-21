@@ -1,6 +1,16 @@
 {% extends 'admin/base.html' %}
+{% load static %}
+
+{% block title %} Ehsop panel admin {% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}"> Eshop Panel </a></h1>
+{% endblock %}
 
 {% block extrastyle %}{{ block.super }}
+
+<link rel="stylesheet" type="text/css" href="{% static "css/font_style.css" %}"/>
+
 <style>
 html[data-theme="light"], :root {
   --secondary: #F7941D;
@@ -54,6 +64,11 @@ div.breadcrumbs {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #ff7c03;
+}
+#site-name a:link, #site-name a:visited {
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: bold;
 }
 </style>
 {% endblock %}

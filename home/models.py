@@ -3,6 +3,8 @@ from django.db import models
 
 
 class Setting(models.Model):
-    logo = models.ImageField(upload_to="site/settings")
-    phone = models.IntegerField()
+    title = models.CharField(max_length=30)
+    
+    def __str__(self):
+        return self.title
     

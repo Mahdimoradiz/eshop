@@ -35,6 +35,18 @@ Version:1.0
 20. 404 Error CSS
 21. Footer CSS
 ========================================*/
+
+@font-face {
+    font-family: "Yek";
+    font-style: normal;
+    font-weight: lighter;
+    src: url("/static/fonts/iranyekanwebboldfanum.woff");
+
+  }
+  * {
+      font-family: "Yek";
+  }
+  
 .color-plate {
 	position: fixed;
 	display: block;

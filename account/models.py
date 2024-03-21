@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
-
 class UserManager(BaseUserManager):
     def create_user(self, phone, password=None):
         """
@@ -74,6 +73,8 @@ class User(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+    
+    
 
 
 class Otp(models.Model):
